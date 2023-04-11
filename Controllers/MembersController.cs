@@ -17,15 +17,16 @@ namespace LibrarySystem.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Member>> GetAllMembers()
+        public async Task<ActionResult> GetAllMembers()
         {
-            return Ok(_libraryService.GetAllMembers());
+            var members = await _libraryService.GetAllMembersAsync();
+            return Ok(members);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Member> GetMemberById(int id)
+        public async Task<ActionResult> GetMemberById(int id)
         {
-            var member = _libraryService.GetMemberById(id);
+            var member = await _libraryService.GetMemberByIdAsync(id);
 
             if (member == null)
             {
@@ -36,7 +37,7 @@ namespace LibrarySystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMember([FromBody] Member member)
+        public async Task<ActionResult> AddMember([FromBody] Member member)
         {
             if (!ModelState.IsValid)
             {
@@ -44,14 +45,14 @@ namespace LibrarySystem.Controllers
                 return BadRequest(ModelState);
             }
 
-            _libraryService.AddMember(member);
+            await _libraryService.AddMemberAsync(member);
             return CreatedAtAction(nameof(GetMemberById), new { id = member.Id }, member);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult RemoveMember(int id)
+        public async Task<ActionResult> RemoveMember(int id)
         {
-            _libraryService.RemoveMember(id);
+            await _libraryService.RemoveMemberAsync(id);
             return NoContent();
         }
     }

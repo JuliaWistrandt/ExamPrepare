@@ -57,28 +57,47 @@ namespace LibrarySystem.Service
             return _books.FirstOrDefault(m => m.Id == bookId);
         }
 
-        public void AddMember(Member member)
+
+        // Member async methods
+
+        public async Task AddMemberAsync(Member member)
         {
             member.Id = _memberIdCounter++;
             member.BorrowedBooks = new List<Book>();
             _members.Add(member);
+            await Task.CompletedTask;
+
         }
 
-        public void RemoveMember(int memberId)
+        public async Task RemoveMemberAsync(int memberId)
         {
             var member = _members.FirstOrDefault(m => m.Id == memberId);
             if (member != null) _members.Remove(member);
-            
+            await Task.CompletedTask;
+
         }
 
-        public IEnumerable<Member> GetAllMembers()
+        public async Task<IEnumerable<Member>> GetAllMembersAsync()
         {
-            return _members;
+            return await Task.FromResult(_members);
         }
 
-        public Member GetMemberById(int memberId)
+        public async Task<Member> GetMemberByIdAsync(int memberId)
         {
-            return _members.FirstOrDefault(m => m.Id == memberId);
+            var member = _members.FirstOrDefault(m => m.Id == memberId);
+            return await Task.FromResult(member);
         }
+
+        public async Task UpdateMemberAsync(int memberId, Member member)
+        {
+            var existingMember = _members.FirstOrDefault(m => m.Id == memberId);
+            if (existingMember != null)
+            {
+                existingMember.Name = member.Name;
+                existingMember.BorrowedBooks = member.BorrowedBooks;
+            }
+            await Task.CompletedTask;
+        }
+      
     }
 }

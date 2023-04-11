@@ -19,10 +19,12 @@ namespace LibrarySystem.Service
         void ReturnBook(int memberId, int bookId);
         public Book GetBookById(int bookId);
 
-        // Member Service
-        void AddMember(Member member);
-        void RemoveMember(int memberId);
-        IEnumerable<Member> GetAllMembers();
-        Member GetMemberById(int memberId);
+        // Member Service async
+        Task AddMemberAsync(Member member);
+        Task RemoveMemberAsync(int memberId);
+        Task<IEnumerable<Member>> GetAllMembersAsync();
+        Task<Member> GetMemberByIdAsync(int memberId);
+        Task UpdateMemberAsync(int memberId, Member member);
+
     }
 }
