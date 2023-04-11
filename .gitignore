@@ -1,0 +1,33 @@
+# Ignore build output
+bin/
+obj/
+
+# Ignore user-specific settings and files
+*.user
+*.suo
+*.userprefs
+
+# Ignore sensitive configuration files
+appsettings*.json
+
+# Ignore Visual Studio temporary files, cache, and other generated files
+.vs/
+
+# Ignore NuGet packages cache
+packages/
+
+# Ignore other temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.db
+*.cache
+
+# Ignore operating system generated files
+.DS_Store
+Thumbs.db
+
+# Ignore Rider IDE files
+.idea/
